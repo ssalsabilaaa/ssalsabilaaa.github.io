@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kalkulator</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(
+                270deg,
+                #ffd6e7,
+                #c7d2fe,
+                #ffd6e7,
+                #fff2b2,
+                #fbcfe8
+            );
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .calculator {
+            width: 300px;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+
+        .display {
+            width: 100%;
+            height: 60px;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            color: #333;
+
+            background: linear-gradient(
+                270deg,
+                #fff7c2,
+                #ffd6e7,
+                #cce7ff,
+                #fbcfe8
+            );
+            background-size: 400% 400%;
+            animation: displayMove 6s ease infinite;
+
+            box-shadow: 0 0 10px #ffd6e7,
+                        0 0 20px #cce7ff,
+                        0 0 30px #fff2b2;
+        }
+
+        @keyframes displayMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #333;
+            background: #cce7ff;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        .clear {
+            background: #fff2b2;
+        }
+
+        .equal {
+            background: #ffd6e7;
+            grid-row: span 2;
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="calculator">
+    <div class="display" id="display">0</div>
+
+    <div class="buttons">
+        <button onclick="clearDisplay()" class="clear">C</button>
+        <button onclick="append('/')">/</button>
+        <button onclick="append('*')">*</button>
+        <button onclick="deleteLast()">DEL</button>
+
+        <button onclick="append('7')">7</button>
+        <button onclick="append('8')">8</button>
+        <button onclick="append('9')">9</button>
+        <button onclick="append('-')">-</button>
+
+        <button onclick="append('4')">4</button>
+        <button onclick="append('5')">5</button>
+        <button onclick="append('6')">6</button>
+        <button onclick="append('+')">+</button>
+
+        <button onclick="append('1')">1</button>
+        <button onclick="append('2')">2</button>
+        <button onclick="append('3')">3</button>
+        <button onclick="calculate()" class="equal">=</button>
+
+        <button onclick="append('0')" style="grid-column: span 2;">0</button>
+        <button onclick="append('.')">.</button>
+    </div>
+</div>
+
+<script>
+let display = document.getElementById("display");
+
+function append(value) {
+    if (display.innerText === "0") {
+        display.innerText = value;
+    } else {
+        display.innerText += value;
+    }
+}
+
+function clearDisplay() {
+    display.innerText = "0";
+}
+
+function deleteLast() {
+    let text = display.innerText;
+    if (text.length === 1) {
+        display.innerText = "0";
+    } else {
+        display.innerText = text.slice(0, -1);
+    }
+}
+
+function calculate() {
+    try {
+        display.innerText = eval(display.innerText);
+    } catch {
+        display.innerText = "Error";
+    }
+}
+</script>
+
+</body>
+</html>
