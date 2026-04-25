@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Halaman Login</title>
+    <style>
+
+        /* ===== BACKGROUND HALAMAN ===== */
+        body {
+            font-family: Arial;
+
+            /* Gradient warna bergerak */
+            background: linear-gradient(
+                270deg,
+                #ffd6e7,
+                #c7d2fe,
+                #ffd6e7,
+                #fff2b2,
+                #fbcfe8
+            );
+
+            /* Supaya gradient bisa animasi */
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+
+            /* Posisi login box di tengah */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Animasi pergerakan background */
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* ===== KOTAK LOGIN (GLASS EFFECT) ===== */
+        .login-box {
+            background: rgba(255, 255, 255, 0.85); /* transparan */
+            backdrop-filter: blur(10px); /* efek blur kaca */
+            width: 350px;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .login-box h1 {
+            margin-bottom: 30px;
+        }
+
+        /* ===== INPUT USERNAME & PASSWORD ===== */
+        input {
+            width: 95%;
+            padding: 12px;
+            margin-bottom: 20px;
+
+            border: none;
+            border-radius: 8px;
+
+            /* efek cekung (inner shadow) */
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+
+            text-align: center;
+            outline: none;
+        }
+
+        /* ===== TOMBOL LOGIN ===== */
+        .login {
+            /* gradient warna tombol */
+            background: linear-gradient(270deg, #ff9ecf, #a5b4fc);
+
+            /* supaya bisa animasi saat hover */
+            background-size: 200% 200%;
+
+            color: white;
+            padding: 12px 30px;
+            border: none;
+
+            /* bentuk tombol bulat */
+            border-radius: 30px;
+
+            cursor: pointer;
+            font-weight: bold;
+            letter-spacing: 1px;
+
+            /* animasi halus */
+            transition: all 0.3s ease;
+
+            /* efek glow */
+            box-shadow: 0 0 10px rgba(255, 158, 207, 0.6);
+        }
+
+        /* ===== SAAT MOUSE DI ATAS TOMBOL ===== */
+        .login:hover {
+            /* gradient bergerak */
+            background-position: right center;
+
+            /* glow makin terang */
+            box-shadow: 
+                0 0 15px rgba(255, 158, 207, 0.9),
+                0 0 25px rgba(165, 180, 252, 0.8);
+
+            /* tombol sedikit naik */
+            transform: translateY(-2px) scale(1.03);
+        }
+
+        /* ===== SAAT TOMBOL DIKLIK ===== */
+        .login:active {
+            /* tombol seperti ditekan */
+            transform: scale(0.95);
+
+            /* shadow mengecil */
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+
+        /* ===== MODAL (POPUP) ===== */
+        .modal {
+            display: none; /* awalnya disembunyikan */
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            /* background gelap transparan */
+            background: rgba(0,0,0,0.5);
+
+            /* isi modal di tengah */
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* BOX DI DALAM MODAL */
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+
+            /* animasi muncul */
+            animation: popUp 0.4s ease;
+        }
+
+        /* animasi popup */
+        @keyframes popUp {
+            from {
+                transform: scale(0.7);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* tombol OK di modal */
+        .modal-box button {
+            margin-top: 15px;
+            padding: 8px 20px;
+            border: none;
+
+            background: linear-gradient(270deg, #ff9ecf, #a5b4fc);
+            color: white;
+
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .modal-box button:hover {
+            opacity: 0.8;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- ===== FORM LOGIN ===== -->
+<div class="login-box">
+    <h1>LOGIN</h1>
+
+    <!-- saat submit, jalankan fungsi JS -->
+    <form id="loginForm" onsubmit="return loginBerhasil()">
+
+        <!-- input username -->
+        <input type="text" placeholder="Username" required>
+
+        <!-- input password -->
+        <input type="password" placeholder="Password" required>
+
+        <!-- tombol login -->
+        <button type="submit" class="login">Login</button>
+    </form>
+</div>
+
+<!-- ===== MODAL / POPUP ===== -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <h2>Login Berhasil!</h2>
+
+        <!-- tombol untuk menutup modal -->
+        <button onclick="tutupModal()">OK</button>
+    </div>
+</div>
+
+<script>
+
+/* fungsi saat login ditekan */
+function loginBerhasil() {
+
+    /* tampilkan modal */
+    document.getElementById("modal").style.display = "flex";
+
+    /* cegah reload halaman */
+    return false;
+}
+
+/* fungsi untuk menutup modal */
+function tutupModal() {
+
+    /* sembunyikan modal */
+    document.getElementById("modal").style.display = "none";
+
+    /* reset input form */
+    document.getElementById("loginForm").reset();
+}
+
+</script>
+
+</body>
+</html>
